@@ -214,6 +214,27 @@ def reward_function(n, A):
     not_connected=int(np.any(eigen==0))
     return float(np.max(eigen))-not_connected
 
+def kite_cost_function(n, A):
+    v = np.zeros(n)
+    v[0] = 1
+    eigen = eigen_vector(v, np.eye(n) + A)
+    unreachable_nodes = np.sum(eigen == 0)
+    if unreachable_nodes > 0:
+        return 0.0
+    top = np.sum(eigen) ** 2
+    bot = np.sum(eigen ** 2)
+    gamma_g = top / bot
+    return float(1.0 / gamma_g)
+
+def pineaple_cost(n, A):
+    v = np.zeros(n)
+    v[0] = 1
+    eigen = eigen_vector(v, np.eye(n) + A)
+    if np.any(eigen == 0):
+            return 0.0
+    return np.max(eigen)-np.min(eigen)
+
+
 for n in range(20, 21):
   r, A = train(compute_reward=reward_function,
               n=n,
