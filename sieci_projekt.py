@@ -226,7 +226,7 @@ def kite_cost_function(n, A):
     gamma_g = top / bot
     return float(1.0 / gamma_g)
 
-def pineaple_cost_function(n, A):
+def cost_function(n, A):
     v = np.zeros(n)
     v[0] = 1
     eigen = eigen_vector(v, np.eye(n) + A)
